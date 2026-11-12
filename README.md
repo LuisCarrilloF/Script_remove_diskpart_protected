@@ -1,5 +1,11 @@
 # Borrado de particiones protegidas (diskpart override)
 
+<div align="center">
+  <img src="https://img.shields.io/badge/PowerShell-5391FE?logo=powershell&logoColor=white" alt="PowerShell">
+  <img src="https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=white" alt="Windows">
+  <img src="https://img.shields.io/badge/DiskPart-0078D4?logo=windows&logoColor=white" alt="DiskPart">
+</div>
+
 Herramienta para eliminar particiones que Windows/DiskPart normalmente rechazan:
 **EFI/ESP, MSR, Recovery, OEM, ocultas**, particiones GPT marcadas como
 *required* (bit 63) y volúmenes bloqueados por atributos, BitLocker, pagefile
@@ -10,6 +16,15 @@ o por estar "en uso".
 > posibilidad de recuperación sencilla. Verifique siempre el **número de disco**
 > con `-List` antes de ejecutar. No lo use en equipos de producción sin respaldo.
 
+## Índice
+  1. [Estructura](#archivos)
+  2. [Probar](#uso-rápido)  
+    2.1 [Parámetros esperados](#parámetros)
+  3. [Funcionamiento](#cómo-salta-las-restricciones-cascada-de-intentos)  
+    3.1. [Limitaciones](#lo-que-no-se-puede-saltar-por-software)
+  4. [Qué hacer después de formatear](#después-de-limpiar)
+  5. [Solucionar problemas](#solución-de-problemas)
+  
 ---
 
 ## Archivos
@@ -65,7 +80,7 @@ Ejecutar-como-Admin.bat -DiskNumber 2 -Aggressive
 
 ---
 
-## Parámetros
+### Parámetros
 
 | Parámetro | Efecto |
 |---|---|
@@ -120,7 +135,7 @@ atributo GPT `0x8000000000000000` es el que marca EFI/MSR/Recovery como
 
 ---
 
-## Lo que **no** se puede saltar por software
+### Lo que **no** se puede saltar por software
 
 Si tras `-Aggressive` sigue fallando, el bloqueo no es de Windows:
 
@@ -149,7 +164,7 @@ sudo dd if=/dev/zero of=/dev/sdX bs=16M status=progress   # último recurso
 
 ## Después de limpiar
 
-El disco queda en estado `RAW`. Para dejarlo usable:
+En caso de no seleccionar la opción 4 del [uso rápido](#uso-rápido), el disco queda en estado `RAW`. Para dejarlo usable:
 
 ```powershell
 Initialize-Disk -Number 2 -PartitionStyle GPT
@@ -166,6 +181,7 @@ partición desde Administración de discos.
 
 | Síntoma | Causa probable | Acción |
 |---|---|---|
+| `File cannot be loaded because running scripts is disabled` | Tienes desactivada la opción para usar scripts| Activa manualmente esta opción. Teclea `Inicio` y busca `Permitir la ejecución de scripts`, activa la opción de PowerShell. **_RECOMENDADO_**|
 | `Delete is not allowed on the selected partition` | Atributo GPT *required* activo | Ya lo cubre el intento 2 (`gpt attributes=0`). |
 | `The disk is write-protected` | Solo-lectura lógico o hardware | `-Aggressive`; si persiste, interruptor físico/firmware. |
 | `The partition is in use` / `acceso denegado` | Pagefile, BitLocker, handle abierto | `-Aggressive`; cerrar programas; reiniciar y reintentar. |
