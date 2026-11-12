@@ -1,5 +1,11 @@
 # Borrado de particiones protegidas (diskpart override)
 
+<div align="center">
+  <img src="https://img.shields.io/badge/PowerShell-5391FE?logo=powershell&logoColor=white" alt="PowerShell">
+  <img src="https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=white" alt="Windows">
+  <img src="https://img.shields.io/badge/DiskPart-0078D4?logo=windows&logoColor=white" alt="DiskPart">
+</div>
+
 Herramienta para eliminar particiones que Windows/DiskPart normalmente rechazan:
 **EFI/ESP, MSR, Recovery, OEM, ocultas**, particiones GPT marcadas como
 *required* (bit 63) y volúmenes bloqueados por atributos, BitLocker, pagefile
