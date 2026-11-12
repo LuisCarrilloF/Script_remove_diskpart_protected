@@ -16,6 +16,15 @@ o por estar "en uso".
 > posibilidad de recuperación sencilla. Verifique siempre el **número de disco**
 > con `-List` antes de ejecutar. No lo use en equipos de producción sin respaldo.
 
+## Indíce
+  1. [Estrutura](#archivos)
+  2. [Probar](#uso-rápido)  
+    2.1 [Parametros esperados](#parámetros)
+  3. [Funcionamiento](#cómo-salta-las-restricciones-cascada-de-intentos)  
+    3.1. [Limitaciones](#lo-que-no-se-puede-saltar-por-software)
+  4. [Qué hacer despúes de formatear](#después-de-limpiar)
+  5. [Solucionar Problemas](#solución-de-problemas)
+  
 ---
 
 ## Archivos
@@ -71,7 +80,7 @@ Ejecutar-como-Admin.bat -DiskNumber 2 -Aggressive
 
 ---
 
-## Parámetros
+### Parámetros
 
 | Parámetro | Efecto |
 |---|---|
@@ -126,7 +135,7 @@ atributo GPT `0x8000000000000000` es el que marca EFI/MSR/Recovery como
 
 ---
 
-## Lo que **no** se puede saltar por software
+### Lo que **no** se puede saltar por software
 
 Si tras `-Aggressive` sigue fallando, el bloqueo no es de Windows:
 
