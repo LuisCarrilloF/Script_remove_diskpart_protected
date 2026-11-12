@@ -181,7 +181,7 @@ partición desde Administración de discos.
 
 | Síntoma | Causa probable | Acción |
 |---|---|---|
-| `File cannot be loaded because running scripts is disabled` | Tienesactivada la opcion para usar scrpts| Activa manualmente esta opcion. Teclea `Inicio` y usca `Permitir la ejecucion de scrpts`, activa la opcion de PowerShell. **_RECOMENDADO_**|
+| `File cannot be loaded because running scripts is disabled` | Tienes desactivada la opción para usar scripts| Activa manualmente esta opcion. Teclea `Inicio` y usca `Permitir la ejecucion de scrpts`, activa la opcion de PowerShell. **_RECOMENDADO_**|
 | `Delete is not allowed on the selected partition` | Atributo GPT *required* activo | Ya lo cubre el intento 2 (`gpt attributes=0`). |
 | `The disk is write-protected` | Solo-lectura lógico o hardware | `-Aggressive`; si persiste, interruptor físico/firmware. |
 | `The partition is in use` / `acceso denegado` | Pagefile, BitLocker, handle abierto | `-Aggressive`; cerrar programas; reiniciar y reintentar. |
