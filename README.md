@@ -149,7 +149,7 @@ sudo dd if=/dev/zero of=/dev/sdX bs=16M status=progress   # último recurso
 
 ## Después de limpiar
 
-El disco queda en estado `RAW`. Para dejarlo usable:
+En caso de no seleccionar la opcion 4 del [uso rapido](#uso-rápido), el disco queda en estado `RAW`. Para dejarlo usable:
 
 ```powershell
 Initialize-Disk -Number 2 -PartitionStyle GPT
@@ -166,6 +166,7 @@ partición desde Administración de discos.
 
 | Síntoma | Causa probable | Acción |
 |---|---|---|
+| `File cannot be loaded because running scripts is disabled` | Tienesactivada la opcion para usar scrpts| Activa manualmente esta opcion. Teclea `Inicio` y usca `Permitir la ejecucion de scrpts`, activa la opcion de PowerShell. **_RECOMENDADO_**|
 | `Delete is not allowed on the selected partition` | Atributo GPT *required* activo | Ya lo cubre el intento 2 (`gpt attributes=0`). |
 | `The disk is write-protected` | Solo-lectura lógico o hardware | `-Aggressive`; si persiste, interruptor físico/firmware. |
 | `The partition is in use` / `acceso denegado` | Pagefile, BitLocker, handle abierto | `-Aggressive`; cerrar programas; reiniciar y reintentar. |
