@@ -1,0 +1,65 @@
+rem ================================================================
+rem  Plantilla MANUAL de DiskPart para borrar particiones protegidas
+rem  Ejecutar (consola elevada):  diskpart /s diskpart-comandos.txt
+rem  ADVERTENCIA: destructivo e irreversible. Revise "list disk" y
+rem  cambie DISCO / PARTICION antes de ejecutar.
+rem  Nota: si su DiskPart se queja de las lineas "rem", borrelas.
+rem  IMPORTANTE: esta plantilla NO detecta el disco del sistema; a
+rem  diferencia del .ps1, aqui usted debe verificar a mano cual es.
+rem ================================================================
+
+rem --- 1. Ver discos y particiones ---
+list disk
+select disk 0
+list partition
+
+rem ================================================================
+rem  OPCION A: borrar UNA particion protegida (EFI, MSR, Recovery, OEM)
+rem  Cambie el numero de disco en "select disk" y de particion abajo.
+rem ================================================================
+select disk 2
+select partition 1
+
+rem  Quitar el atributo GPT "required" (bit 63) que impide el borrado
+gpt attributes=0x0000000000000000
+
+rem  Quitar atributos de volumen que bloquean la eliminacion
+attributes volume clear readonly
+attributes volume clear hidden
+attributes volume clear nodefaultdriveletter
+attributes volume clear shadowcopy
+
+rem  Borrado forzado (override = ignora proteccion OEM/EFI/MSR)
+delete partition override
+
+rem ================================================================
+rem  OPCION B: borrar TODO el disco (todas las particiones)
+rem  Descomente SOLO una de las dos lineas siguientes.
+rem ================================================================
+rem select disk 2
+rem attributes disk clear readonly
+rem clean
+rem clean all
+
+rem ================================================================
+rem  OPCION C: si la particion sigue en uso, vea README.md.
+rem  Truco extra: cambiar el tipo de particion y reintentar.
+rem ================================================================
+rem select disk 2
+rem select partition 1
+rem set id=ebd0a0a2-b9e5-4433-87c0-68b6b72699c7 override
+rem delete partition override
+
+rem ================================================================
+rem  OPCION D: dejar el disco usable (equivale a -AutoManage)
+rem  GPT + una particion con todo el disco + NTFS "ALMACENAMIENTO".
+rem  REEMPLACE "disk 2" por su disco.
+rem  Nota: el .ps1 ademas finaliza el volumen (letra, montaje y
+rem  etiqueta) para que Windows lo muestre sin tocar nada a mano.
+rem ================================================================
+rem select disk 2
+rem clean
+rem convert gpt
+rem create partition primary
+rem format quick fs=ntfs label="ALMACENAMIENTO"
+rem assign
