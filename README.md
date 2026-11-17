@@ -34,7 +34,7 @@ o por estar "en uso".
 | `Remove-ProtectedPartitions.ps1` | Script principal (cascada de métodos, logging, resumen). |
 | `Ejecutar-como-Admin.bat` | Doble clic: lista discos o lanza el script con los argumentos que le pase. |
 | `diskpart-comandos.txt` | Plantilla manual de DiskPart equivalente, para ejecutar a mano. |
-| `README.md` | Este documento. |
+| `README.md` | Documentación del proyecto. |
 
 Requisitos: Windows 10/11 o Server 2016+, PowerShell 5.1+, consola **elevada**
 (el script se auto-eleva pidiendo UAC).
